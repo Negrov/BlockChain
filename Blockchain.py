@@ -1,3 +1,4 @@
+import json
 from time import time
 from CreateBlock import Block
 
@@ -6,6 +7,8 @@ class Blockchain:
 
     def __init__(self):
         self.chain = [Block(str(int(time())))]  # Создание первичного блока
+        self.difficulty = 1
+        self.blockTime = 30000
 
     def getlastblock(self) -> Block:
         return self.chain[len(self.chain) - 1]  # Последний блок в списке блоков
@@ -15,6 +18,7 @@ class Blockchain:
         block.hash = block.gethash()  # хеш этого блока
         block.mine(block.difficulty)
         self.chain.append(block)  # Добавление нового блока в список блоков
+        self.difficulty += (-1, 1)[int(time()) - int(self.getlastblock().timestamp) < self.blockTime]
 
     def examination(self) -> bool:
         for i in range(1, len(self.chain)):  # Проверка блоков
@@ -27,3 +31,7 @@ class Blockchain:
                 return False
 
         return True
+
+    def __repr__(self):
+        return json.dumps([{'data': item.data, 'timestamp': item.timestamp, 'nonce': item.nonce, 'hash': item.hash,
+                            'prevHash': item.prevHash} for item in self.chain], indent=4)
