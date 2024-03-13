@@ -6,7 +6,7 @@ from time import time
 def main():
 
     june = Blockchain.Blockchain()
-    june.addblock(CreateBlock.Block(str(int(time())), {"from": "june", "to": "jack", "amount": 10000}))
+    june.add_block(CreateBlock.Block(str(int(time())), {"from": "june", "to": "jack", "amount": 10000}))
     print(june)
 
 

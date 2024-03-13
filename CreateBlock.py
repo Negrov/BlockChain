@@ -26,5 +26,5 @@ class Block:
 
         while self.hash[:difficulty] != '0' * difficulty:  # Пока хеш не будет начинаться со строки 0 * difficulty
 
-            self.nonce += 1  # New nonce
-            self.hash = self.gethash()  # Hasing new nonce
+            self.nonce += 1  # Новый nonce
+            self.hash = self.gethash()  # Хешируем nonce

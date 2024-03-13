@@ -10,15 +10,15 @@ class Blockchain:
         self.difficulty = 1
         self.blockTime = 30000
 
-    def getlastblock(self) -> Block:
+    def get_last_block(self) -> Block:
         return self.chain[len(self.chain) - 1]  # Последний блок в списке блоков
 
-    def addblock(self, block) -> None:
-        block.prevHash = self.getlastblock().hash  # Хеш предыдущего блока
+    def add_block(self, block) -> None:
+        block.prevHash = self.get_last_block().hash  # Хеш предыдущего блока
         block.hash = block.gethash()  # хеш этого блока
         block.mine(block.difficulty)
         self.chain.append(block)  # Добавление нового блока в список блоков
-        self.difficulty += (-1, 1)[int(time()) - int(self.getlastblock().timestamp) < self.blockTime]
+        self.difficulty += (-1, 1)[int(time()) - int(self.get_last_block().timestamp) < self.blockTime]
 
     def examination(self) -> bool:
         for i in range(1, len(self.chain)):  # Проверка блоков
