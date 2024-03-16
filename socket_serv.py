@@ -1,21 +1,22 @@
 import socket
+import users_db
 
 
-sock = socket.socket()
-sock.bind(('localhost', 8080))
-sock.listen(2)
-conn, address = sock.accept()
-data = ""
+class Server:
 
+    def __init__(self):
+        self.suck = socket.socket()
+        self.suck.bind(('localhost', 8080))
+        self.suck.listen(2)
+        self.conn, self.address = self.suck.accept()
+        users_db.users.append(self.conn, self.address)
 
-while True:
-    text = conn.recv(2048)
-
-    if not text:
-        break
-
-    data += text.decode("utf-8")
-
-data = data.encode("utf-8")
-
-conn.close()
+    def start_listening(self):
+        data = ""
+        while True:
+            text = self.conn.recv(2048)
+            if not text:
+                break
+            data += text.decode("utf-8")
+        data = data.encode("utf-8")
+        self.conn.close()
